@@ -1,0 +1,5 @@
+{
+  "cSpell.words": ["autovalidate", "firestore", "Getx", "signup", "snapchot"],
+  "workbench.colorTheme": "Hack The Box",
+  "editor.codeActionsOnSave": ["source.organizeImports"]
+}
