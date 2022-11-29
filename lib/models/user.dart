@@ -9,14 +9,14 @@ class UserModel {
     required this.fullName,
   });
 
-  UserModel.fromJson(Map<String, Object?> json)
+  UserModel.fromJson(Map<String, dynamic> json)
       : this(
           uid: json["uid"] as String,
           email: json["email"] as String,
           fullName: json["fullName"] as String,
         );
 
-  Map<String, Object?> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       "uid": uid,
       "email": email,

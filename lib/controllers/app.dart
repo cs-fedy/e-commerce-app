@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/models/user.dart';
-import 'package:e_commerce/pages/home.dart';
-import 'package:e_commerce/pages/landing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AppController extends GetxController {
   RxBool isLoggedIn = false.obs;
-  late Rx<User?> firebaseUser;
+  late Rx<User?> _firebaseUser;
+  late UserModel? _user;
 
   FirebaseAuth auth = FirebaseAuth.instance;
   final userFireStoreCollection = FirebaseFirestore.instance
@@ -23,20 +22,27 @@ class AppController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    firebaseUser = Rx<User?>(auth.currentUser);
-    firebaseUser.bindStream(auth.userChanges());
-    ever(firebaseUser, handleUserChange);
+    _firebaseUser = Rx<User?>(auth.currentUser);
+    _firebaseUser.bindStream(auth.userChanges());
+    ever(_firebaseUser, handleUserChange);
   }
 
-  void handleUserChange(User? user) {
+  void handleUserChange(User? user) async {
     if (user == null) {
       isLoggedIn(false);
-      Get.offAll(() => LandingScreen());
+      Get.offAllNamed("/Landing");
     } else {
-      firebaseUser = Rx<User?>(user);
+      _firebaseUser = Rx<User?>(user);
+      final fetchResult =
+          await userFireStoreCollection.doc(_firebaseUser.value?.uid).get();
+      _user = fetchResult.data();
       isLoggedIn(true);
-      Get.offAll(() => HomeScreen());
+      Get.offAllNamed("/Home");
     }
+  }
+
+  UserModel? get user {
+    return _user;
   }
 
   Future<Map<String, dynamic>> signup(

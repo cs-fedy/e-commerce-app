@@ -1,6 +1,6 @@
 import 'package:e_commerce/components/button.dart';
-import 'package:e_commerce/components/custom_input.dart';
 import 'package:e_commerce/components/google_button.dart';
+import 'package:e_commerce/components/input.dart';
 import 'package:e_commerce/controllers/app.dart';
 import 'package:e_commerce/controllers/auth.dart';
 import 'package:e_commerce/utils/constants.dart';
@@ -67,13 +67,13 @@ class _LoginScreenState extends State<LoginScreen> {
           key: _formKey,
           child: Column(
             children: [
-              CustomTextField(
+              Input(
                 onSaved: (newValue) => email = newValue as String,
                 hintText: "email@example.com",
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 19),
-              CustomTextField(
+              Input(
                 onSaved: (newValue) => password = newValue as String,
                 hintText: "user password",
                 keyboardType: TextInputType.visiblePassword,

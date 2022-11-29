@@ -1,8 +1,8 @@
 import 'package:e_commerce/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextField extends FormField<String> {
-  CustomTextField({
+class Input extends FormField<String> {
+  Input({
     super.key,
     required FormFieldSetter<String> onSaved,
     FormFieldValidator<String>? validator,
