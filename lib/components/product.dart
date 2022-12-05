@@ -4,70 +4,99 @@ import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
-  const ProductCard({required this.product, super.key});
+  final Function() handleAddToCard;
+  final Function() showDetails;
+  const ProductCard({
+    required this.product,
+    required this.showDetails,
+    required this.handleAddToCard,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 183,
-      height: 265,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFFE5E5E5).withAlpha(40),
-            blurRadius: 4,
-            offset: const Offset(5, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Image.network(
-              product.thumbnail,
-              fit: BoxFit.fill,
-            ),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return InkWell(
+      onTap: showDetails,
+      child: Card(
+        elevation: 0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
               children: [
-                Text(
-                  product.title,
-                  style: Theme.of(context).textTheme.r12,
+                AspectRatio(
+                  aspectRatio: 18.0 / 11.0,
+                  child: Image.network(
+                    product.thumbnail,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: InkWell(
+                    onTap: handleAddToCard,
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Icon(Icons.shopping_bag),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 10,
+                  left: 10,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          "${product.rating}",
+                          style: Theme.of(context).textTheme.b12,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      product.title,
+                      style: Theme.of(context).textTheme.r12,
+                      softWrap: true,
+                    ),
+                    const SizedBox(width: 8),
                     Text(
                       "TND ${product.price}",
                       style: Theme.of(context).textTheme.b12,
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE4E4E4),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Icon(Icons.shopping_bag_outlined),
-                      ),
-                    )
                   ],
-                )
-              ],
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

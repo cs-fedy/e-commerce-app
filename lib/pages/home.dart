@@ -1,6 +1,8 @@
 import 'package:e_commerce/components/home_top_bar.dart';
 import 'package:e_commerce/components/product.dart';
+import 'package:e_commerce/controllers/cart.dart';
 import 'package:e_commerce/controllers/product.dart';
+import 'package:e_commerce/pages/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   ProductController productController = Get.put(ProductController());
+  CartController cartController = Get.put(CartController());
 
   Widget _buildProducts() {
     return Expanded(
@@ -26,9 +29,16 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisSpacing: 20,
           mainAxisSpacing: 20,
         ),
-        itemBuilder: (context, index) => ProductCard(
-          product: productController.products.value[index],
-        ),
+        itemBuilder: (context, index) {
+          final product = productController.products.value[index];
+          return ProductCard(
+            product: product,
+            handleAddToCard: () => cartController.addItem(product),
+            showDetails: () => Get.to(
+              ProductDetails(product: product),
+            ),
+          );
+        },
         padding: const EdgeInsets.symmetric(
           vertical: 25,
           horizontal: 20,

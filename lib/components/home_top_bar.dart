@@ -43,7 +43,7 @@ class HomeTopBar extends StatelessWidget {
               ),
               const SizedBox(width: 5),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Get.toNamed("/Cart"),
                 icon: const Icon(Icons.shopping_bag_outlined),
               ),
             ],
