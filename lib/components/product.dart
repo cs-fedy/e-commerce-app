@@ -33,21 +33,6 @@ class ProductCard extends StatelessWidget {
                 ),
                 Positioned(
                   top: 10,
-                  right: 10,
-                  child: InkWell(
-                    onTap: handleAddToCard,
-                    child: Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Icon(Icons.shopping_bag),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 10,
                   left: 10,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
